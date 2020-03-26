@@ -13,14 +13,13 @@ export default function Profile() {
     const history = useHistory();
 
     useEffect(() => {
-        api.get('incidents', {
+        api.get('profile', {
             headers: {
                 Authorization: ongId,
             }
         }).then(response => {
             setIncidents(response.data);
         })
-
     }, [ongId]);
 
     async function handleDeleteIncident(id) {
@@ -37,7 +36,7 @@ export default function Profile() {
     }
 
 
-    async function handleLogout(){
+    function handleLogout(){
         localStorage.clear();
         history.push('/');
     }

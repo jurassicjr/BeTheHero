@@ -28,7 +28,7 @@ export default function NewIncident() {
                     Authorization: ongId,
                 }
             });
-            history.push('profile');
+            history.push('/profile');
         } catch (error) {
             alert('Erro ao cadastrar caso, tente novamente !');
         }
@@ -48,8 +48,8 @@ export default function NewIncident() {
                     </Link>
                 </section>
                 <form onSubmit={handleNewIncident}>
-                    <input placeholder="Título do caso" value={title} onChange={e => setTitle(e.target.title)} />
-                    <textarea placeholder="Descrição" value={description} onChange={e => setTitle(e.target.title)} />
+                    <input placeholder="Título do caso" value={title} onChange={e => setTitle(e.target.value)} />
+                    <textarea placeholder="Descrição" value={description} onChange={e => setDescription(e.target.value)} />
                     <input placeholder="Valor em reais" value={value} onChange={e => setValue(e.target.value)} />
                     <button className="button" type="submit">
                         Cadastrar
