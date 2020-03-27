@@ -15,6 +15,19 @@ module.exports = {
     }
   },
 
+  test: {
+    client: 'mysql',
+    connection: {
+      host: '127.0.0.1',
+      user:     'root',
+      password: 'Eganmuw67848.110110',
+      database: 'betheherotest'
+    },
+    migrations : {
+      directory : './src/database/migrations'
+    }
+  },
+
   staging: {
     client: 'mysql',
     connection: {
