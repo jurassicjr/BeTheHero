@@ -1,5 +1,7 @@
 const connection = require("../database/connection");
 const generateUniqueId = require('../utils/generateUniqueId');
+const jwt = require("jsonwebtoken");
+const hash = require("../config/auth");
 
 
 module.exports = {
@@ -23,7 +25,11 @@ module.exports = {
             whatsapp,
             city,
             uf
-        })
-        return response.json({ id });
+        });
+
+        const token = jwt.sign({ id: id }, hash.secret, {
+            expiresIn: 86400,
+        });
+        return response.json({ id, token });
     }
 }
