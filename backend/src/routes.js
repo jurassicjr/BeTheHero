@@ -31,7 +31,13 @@ routes.post('/ongs', celebrate({
     })
 }), OngController.create);
 
-routes.post('/incidents', IncidentController.create);
+routes.post('/incidents', authMiddleware, celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        title: Joi.string().required(),
+        description: Joi.string().required(),
+        value: Joi.number().min(0)
+    }),
+}), IncidentController.create);
 
 routes.get('/incidents', celebrate({
     [Segments.QUERY]: Joi.object().keys({
@@ -39,7 +45,7 @@ routes.get('/incidents', celebrate({
     })
 }), IncidentController.index);
 
-routes.delete('/incidents/:id', celebrate({
+routes.delete('/incidents/:id', authMiddleware, celebrate({
     [Segments.PARAMS]: Joi.object().keys({
         id: Joi.number().required()
     }),
@@ -54,6 +60,10 @@ routes.get('/profile', celebrate({
     }).unknown()
 }), authMiddleware, ProfileController.index);
 
-routes.post('/sessions', SessionController.create);
+routes.post('/sessions', celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        ongId: Joi.string().required()
+    })
+}), SessionController.create);
 
 module.exports = routes;

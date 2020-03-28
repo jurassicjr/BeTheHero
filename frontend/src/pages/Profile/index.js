@@ -9,26 +9,28 @@ import './styles.css'
 export default function Profile() {
     const [incidents, setIncidents] = useState([]);
     const ongName = localStorage.getItem('ongName');
-    const ongId = localStorage.getItem('ongId');
+    const authToken = "Bearer " + localStorage.getItem('token');
+
     const history = useHistory();
 
     useEffect(() => {
         api.get('profile', {
             headers: {
-                Authorization: ongId,
+                Authorization: authToken,
             }
         }).then(response => {
             setIncidents(response.data);
         })
-    }, [ongId]);
+    }, [authToken]);
 
     async function handleDeleteIncident(id) {
         try {
             await api.delete(`incidents/${id}`, {
                 headers: {
-                    Authorization: ongId,
+                    Authorization: authToken,
                 }
             });
+
             setIncidents(incidents.filter(incident => incident.id !== id));
         } catch (error) {
             alert('Erro ao deletar caso tente novamente');
@@ -36,7 +38,7 @@ export default function Profile() {
     }
 
 
-    function handleLogout(){
+    function handleLogout() {
         localStorage.clear();
         history.push('/');
     }
